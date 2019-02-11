@@ -2,8 +2,8 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
    <channel>
       <title>JW.ORG - Ce e nou</title>
-      <link>https://www.jw.org/ro/ce-e-nou/rss/WhatsNewWebArticles/feed.xml</link>
-      <atom:link href="https://www.jw.org/ro/ce-e-nou/rss/WhatsNewWebArticles/feed.xml" rel="self" type="application/rss+xml" />
+      <link>https://peterportfoliomac.github.io/en/RSS.xml</link>
+      <atom:link href="https://peterportfoliomac.github.io/en/RSS.xml" rel="self" type="application/rss+xml" />
       <description><![CDATA[VedeÅ£i ce s-a postat recent pe jw.org, site-ul oficial al Martorilor lui Iehova.]]></description>
 
       
