@@ -98,12 +98,12 @@
 			<div id="toc_container">
 <p class="toc_title">Table of Contents</p>
 <ul class="toc_list">
-  <li><a href="#Point_Header_01">Sending Emails from Google Sheets</a></li>
-<li><a href="#Point_Header_02">Create new comp in AE with Adobe ExtendScript Toolkit</a></li>
-<li><a href="#Point_Header_03">Import folder into After Effects using ExtendScript</a></li>
-<li><a href="#Point_Header_04">Add Comp to Render Queue in After Effects using ExtendScrip</a></li>
-<li><a href="#Point_Header_05">Trimming Footage in Layer using ExtendScript</a></li>
-<li><a href="#Point_Header_06">Import files and create comp using ExtendScript</a></li>
+  <li><a href="#Sending_Emails_from_Google_Sheets">Sending Emails from Google Sheets</a></li>
+<li><a href="#Create_new_comp_in_AE_with_Adobe_ExtendScript_Toolkit">Create new comp in AE with Adobe ExtendScript Toolkit</a></li>
+<li><a href="#Import_folder_into_After_Effects_using_ExtendScript">Import folder into After Effects using ExtendScript</a></li>
+<li><a href="#Add_Comp_to_Render_Queue_in_After_Effects_using_ExtendScrip">Add Comp to Render Queue in After Effects using ExtendScrip</a></li>
+<li><a href="#Trimming_Footage_in_Layer_using_ExtendScript">Trimming Footage in Layer using ExtendScript</a></li>
+<li><a href="#Import_files_and_create_comp_using_ExtendScript">Import files and create comp using ExtendScript</a></li>
 
 </ul>
 </div>	
@@ -111,7 +111,7 @@
 				<p> </p>
 				<p> </p>
 				
-				<h4 id="Point_Header_01">Sending Emails from Google Sheets</h4>
+				<h4 id="Sending_Emails_from_Google_Sheets">Sending Emails from Google Sheets</h4>
 <pre><code>
 function sendEmails() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -149,7 +149,7 @@ function sendEmails() {
 	
 	
 	
-	<h4 id="Point_Header_02">Create new comp in AE with Adobe ExtendScript Toolkit</h4>
+	<h4 id="Create_new_comp_in_AE_with_Adobe_ExtendScript_Toolkit">Create new comp in AE with Adobe ExtendScript Toolkit</h4>
 <pre><code>
 {
   app.beginUndoGroup("Demo Script");
@@ -176,7 +176,7 @@ function sendEmails() {
 
 
 
-<h4 id="Point_Header_03">Import folder into After Effects using ExtendScript</h4>
+<h4 id="Import_folder_into_After_Effects_using_ExtendScript">Import folder into After Effects using ExtendScript</h4>
 <pre><code>
 var folder = new Folder;
 folder = folder.selectDlg("Please select a folder");
@@ -209,7 +209,7 @@ function importFiles(files, folderName) {
 
 
 
-<h4 id="Point_Header_04">Add Comp to Render Queue in After Effects using ExtendScript</h4>
+<h4 id="Add_Comp_to_Render_Queue_in_After_Effects_using_ExtendScrip">Add Comp to Render Queue in After Effects using ExtendScript</h4>
 <pre><code>
 {
 	var QTtemplate = "Alpha Only";
@@ -241,7 +241,7 @@ function importFiles(files, folderName) {
 
 
 
-<h4 id="Point_Header_05">Trimming Footage in Layer using ExtendScript</h4>
+<h4 id="Trimming_Footage_in_Layer_using_ExtendScript">Trimming Footage in Layer using ExtendScript</h4>
 <pre><code>
 // Layer 01
 var activeItem = app.project.activeItem;
@@ -289,7 +289,7 @@ activeItem.layer(5).scale.setValue([50, 50])
 
 
 
-<h4 id="Point_Header_06">Import files and create comp using ExtendScript</h4>
+<h4 id="Import_files_and_create_comp_using_ExtendScript">Import files and create comp using ExtendScript</h4>
 <pre><code>
 
 app.beginUndoGroup("Import");
