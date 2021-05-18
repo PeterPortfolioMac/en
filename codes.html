@@ -103,6 +103,8 @@
 <li><a href="#Point_Header_03">Import folder into After Effects using ExtendScript</a></li>
 <li><a href="#Point_Header_04">Add Comp to Render Queue in After Effects using ExtendScrip</a></li>
 <li><a href="#Point_Header_05">Trimming Footage in Layer using ExtendScript</a></li>
+<li><a href="#Point_Header_06">Import files and create comp using ExtendScript</a></li>
+
 </ul>
 </div>	
 				
@@ -283,6 +285,65 @@ activeItem.layer(5).scale.setValue([50, 50])
 
 
 
+
+
+
+
+<h4 id="Point_Header_06">Import files and create comp using ExtendScript</h4>
+<pre><code>
+
+app.beginUndoGroup("Import");
+ 
+var myFolder = new Folder("~\\Desktop\\test");
+var myImportOptions = new ImportOptions();
+var importedLayers = new Array();
+ 
+var myFiles = myFolder.getFiles("*.mp4");
+var myAudioFiles = myFolder.getFiles("*.mp3");
+var allMyFiles = myFiles.concat(myAudioFiles);
+ 
+var numFiles = allMyFiles.length;
+var numAudio = 0;
+var numVisual = 0;
+var audioArray = new Array();
+var visualArray = new Array();
+for(var i = 0; i < allMyFiles.length; i++){
+        myImportOptions.file = allMyFiles[i];
+        importedLayers.push(app.project.importFile(myImportOptions));
+    }
+ 
+var duration = 0;
+for(var e = 1; e <= app.project.numItems; e++){
+        if(app.project.item(e).hasVideo == true){
+                numVisual++;
+                visualArray.push(app.project.item(e));
+                duration += app.project.item(e).duration;
+            }
+        if(app.project.item(e).hasVideo == false && app.project.item(e).hasAudio == true){
+                numAudio++;
+                audioArray.push(app.project.item(e));
+            }
+    }
+ 
+var tempComp = app.project.items.addComp("This is a test comp", 1280, 720, 1, 10, 24);   
+tempComp.openInViewer();
+var startTime = 0;
+for(var q = 0; q < visualArray.length; q++){
+        
+        var thisLayer = tempComp.layers.add(visualArray[q]);
+        thisLayer.audioEnabled = false;
+        thisLayer.startTime = startTime;
+        startTime = thisLayer.outPoint;
+    }
+var audioLayer = tempComp.layers.add(audioArray[0]);
+audioLayer.outPoint = duration;
+
+alert("Comp created")
+
+
+</code></pre>
+	
+	<p><bt>TAGS: <a href="#">Adobe ExtendScript Toolkit</a></bt> - <bt><a href="#">JavaScript</a></bt> - <bt><a href="#">ActionScript</a></bt></p>
 
 
 
