@@ -160,7 +160,38 @@ h2{
 }
 </style>
 
+	   <!-- ALERT -->
+	  <style>
+.alert {
+  padding: 20px;
+  background-color: #1BBC9B;
+  color: white;
+  opacity: 1;
+  transition: opacity 0.6s;
+  margin-bottom: 15px;
+}
 
+.alert.success {background-color: #4CAF50;}
+.alert.info {background-color: #059eeb;}
+.alert.warning {background-color: #ff9800;}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+</style>
+	
+	<!-- end ALERT -->
 
 	  
 	  
@@ -192,15 +223,11 @@ h2{
       </div>
     </div>
 	
-	  
-	  
-	  <div class="alert info">
+	
+	<div class="alert info">
   <span class="closebtn">&times;</span>  
   <strong>Info!</strong> This portfolio is currently under construction. Sorry for any inconvenience.
 </div>
-	  
-	  
-	  
 	
 	<!-- +++++ Projects Section +++++ -->
 	
@@ -251,7 +278,7 @@ h2{
 				<p>Commercial/AD Screenplays</p>
 			</div>
 			<div class="col-lg-4">
-				<a class="zoom green" href="aerial_videography.html"><img class="img-responsive" src="assets/img/portfolio/port05.jpg" alt="" /></a>
+				<a class="zoom green" href="Aerial_Videography.html"><img class="img-responsive" src="assets/img/portfolio/port05.jpg" alt="" /></a>
 				<p>Aerial Videography</p>
 			</div>
 			<div class="col-lg-4">
@@ -326,6 +353,19 @@ h2{
 		
 		
 	</script>	
+	
+	 <script>
+var close = document.getElementsByClassName("closebtn");
+var i;
+
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function(){
+    var div = this.parentElement;
+    div.style.opacity = "0";
+    setTimeout(function(){ div.style.display = "none"; }, 600);
+  }
+}
+</script>
 		
 		
 	
