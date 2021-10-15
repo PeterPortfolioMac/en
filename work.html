@@ -173,6 +173,46 @@ h2{
 }
 </style>
 
+		   <!-- START SUBMENU -->   
+	   <style>
+.dropbtn {
+  background-color: grey;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
+		   <!-- END SUBMENU --> 
+		   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 	   <!-- ALERT -->
 	  <style>
 .alert {
@@ -230,7 +270,14 @@ h2{
             <li><a href="about.html">About</a></li>
             <li><a href="under_construction.html">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
-			<li><a href="#" target="_blank">Resume</a></li>
+			<div class="dropdown">
+  <button class="dropbtn"><i class="fa fa-download" aria-hidden="true"></i> RESUME</button>
+  <div class="dropdown-content">
+    <a href="cv/CV_Peter_Macris.pdf" target="_blank">ENGLISH</a>
+    <a href="https://peterportfoliomac.github.io/ro" target="_blank">ROMANIAN</a>
+    
+  </div>
+</div>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
