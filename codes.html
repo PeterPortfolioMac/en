@@ -105,6 +105,8 @@
 <li><a href="#Trimming_Footage_in_Layer_using_ExtendScript">Trimming Footage in Layer using ExtendScript</a></li>
 <li><a href="#Import_files_and_create_comp_using_ExtendScript">Import files and create comp using ExtendScript</a></li>
 <li><a href="#SRT_subtitle_import_for_AE">SRT subtitle import for AE</a></li>
+<li><a href="#PowerShell_replace_rename">Removing the same part of a file name for many files in Windows - PowerShell</a></li>
+
 
 
 </ul>
@@ -466,6 +468,49 @@ makeSubs();
 </code></pre>
 	
 	<p><bt>TAGS: <a href="#">Adobe ExtendScript Toolkit</a></bt> - <bt><a href="#">JavaScript</a></bt> - <bt><a href="#">ActionScript</a></bt></p>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<h4 id="PowerShell_replace_rename">Removing the same part of a file name for many files in Windows - PowerShell</h4>
+<pre><code>
+
+cd D:\rename
+
+---
+or
+---
+
+Set-Location -Path "G:\my folder location"
+
+---
+
+get-childitem *.pdf | foreach { rename-item $_ $_.Name.Replace("-", " ") }
+get-childitem *.pdf | foreach { rename-item $_ $_.Name.Replace("_", " ") }
+
+
+
+---
+
+Analyzing it:
+
+get-childitem *.pdf
+This lists all files whose names end with .pdf.  They are then piped to the next command with the | operator.
+
+foreach { rename-item $_ $_.Name.Replace("Radiohead -", " ") }
+This replaces all instances of Radiohead - with nothing, denoted by " ", effectively wiping the word from all the files in the directory.
+
+You could also modify get-childitem *.pdf to get-childitem – that would rename all the files in the directory, not just files whose names end with .pdf.
+
+</code></pre>
+	
+	<p><bt>TAGS: <a href="#">PowerShell</a></bt> - <bt><a href="#">PDF</a></bt> - <bt><a href="#">Windows</a></bt></p>
 
 
 
