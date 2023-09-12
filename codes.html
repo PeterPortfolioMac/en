@@ -104,8 +104,10 @@
 <li><a href="#Add_Comp_to_Render_Queue_in_After_Effects_using_ExtendScrip">Add Comp to Render Queue in After Effects using ExtendScrip</a></li>
 <li><a href="#Trimming_Footage_in_Layer_using_ExtendScript">Trimming Footage in Layer using ExtendScript</a></li>
 <li><a href="#Import_files_and_create_comp_using_ExtendScript">Import files and create comp using ExtendScript</a></li>
+<li><a href="#tiktok_comp">Create TikTok Comp in AE using ExtendScript</a></li>
 <li><a href="#SRT_subtitle_import_for_AE">SRT subtitle import for AE</a></li>
 <li><a href="#PowerShell_replace_rename">Removing the same part of a file name for many files in Windows - PowerShell</a></li>
+
 
 
 
@@ -349,6 +351,581 @@ alert("Comp created")
 </code></pre>
 	
 	<p><bt>TAGS: <a href="#">Adobe ExtendScript Toolkit</a></bt> - <bt><a href="#">JavaScript</a></bt> - <bt><a href="#">ActionScript</a></bt></p>
+	
+	
+	
+	
+	
+	<h4 id="tiktok_comp">Create TikTok Comp in AE using ExtendScript</h4>
+<pre><code>
+ // create a new FolderItem in project, with name "comps"
+var compFolder = app.project.items.addFolder("00. Comps");
+var compFolder = app.project.items.addFolder("01. Audio");
+var compFolder = app.project.items.addFolder("02. Video");
+var compFolder = app.project.items.addFolder("03. Photo");
+var compFolder = app.project.items.addFolder("04. ai");
+var compFolder = app.project.items.addFolder("05. psd");
+// move all compositions into new folder by setting
+// compItem’s parentFolder to "comps" folder
+for(var i = 1; i <= app.project.numItems; i++) { if(app.project.item(i) instanceof CompItem) app.project.item(i).parentFolder = compFolder; }
+ 
+ 
+ 
+ // Creating project
+{
+  app.beginUndoGroup("Video TikTok");
+
+  // Creating project
+  var currentProject  = (app.project) ? app.project : app.newProject();
+
+  // Creating comp
+  var compSettings    = cs = [1080, 1920, 1, 89, 30];
+  var defaultCompName = "Video TikTok"
+  var currentComp     = (currentProject.activeItem) ? currentProject.activeItem : currentProject.items.addComp(defaultCompName, cs[0], cs[1], cs[2], cs[3], cs[4]);
+  currentComp.openInViewer();
+
+
+}
+
+
+ // Import files
+
+app.beginUndoGroup("Import");
+ 
+var myFolder = new Folder("~\\Desktop\\media");
+var myImportOptions = new ImportOptions();
+var importedLayers = new Array();
+ 
+var myFiles = myFolder.getFiles("*.jpg");
+var myAudioFiles = myFolder.getFiles("*.mp3");
+var myAudioFiles = myFolder.getFiles("*.aif");
+var allMyFiles = myFiles.concat(myAudioFiles);
+ 
+var numFiles = allMyFiles.length;
+var numAudio = 0;
+var numVisual = 0;
+var audioArray = new Array();
+var visualArray = new Array();
+for(var i = 0; i < allMyFiles.length; i++){
+        myImportOptions.file = allMyFiles[i];
+        importedLayers.push(app.project.importFile(myImportOptions));
+    }
+
+
+
+
+//Extra Folders
+
+
+{
+
+function FolderSetup(thisObj)
+{
+var folderSetupData = new Object();
+folderSetupData.scriptName = "New Folder Setup";
+folderSetupData.version = "1.2";
+
+folderSetupData.strAboutTitle = "About " + folderSetupData.scriptName;
+folderSetupData.strAbout = folderSetupData.scriptName + " " + folderSetupData.version + "\n" +
+
+"This script allows you to describe a hierarchy of folders to create in the Project panel by entering folder names on successive lines, with the indentation implying the nesting level.\n" +
+"\n" +
+"To enter new lines, press Ctrl+Enter (Windows) or Ctrl+Return (Mac) in CS5.5 and earlier, or just Enter/Return in CS6 and later. Use four (4) additional spaces of indentation at the beginning of a line to indicate that you want a folder to be created inside the previous parent folder.\n" +
+"\n" +
+"You can use this script as a dockable panel by placing it in a ScriptUI Panels subfolder of the Scripts folder, and then choosing the Folder Setup.jsx script from the Window menu.";
+folderSetupData.strFolderHierarchy = "Ai nevoie de alte foldere? Adauga folderele mai jos, unul sub altul";
+folderSetupData.strDefaultHierarchy = "New folder 1 / New folder 2";
+folderSetupData.strCreateFolders = "Creaza folder";
+folderSetupData.strHelp = "?";
+folderSetupData.strErrMinAE90 = "This script requires Adobe After Effects CS4 or later.";
+
+// folderSetup_buildUI()
+// Function for creating the user interface
+function folderSetup_buildUI(thisObj)
+{
+var pal = (thisObj instanceof Panel) ? thisObj : new Window("palette", folderSetupData.scriptName, undefined, {resizeable: true});
+
+if (pal != null)
+{
+var hierarchyWantReturn = (parseFloat(app.version) >= 11) ? ", wantReturn: true" : "";
+var res =
+"""group {
+orientation:'column', alignment:['fill','fill'],
+header: Group {
+alignment:['fill','top'],
+hierarchyTitle: StaticText { text:'""" + folderSetupData.strFolderHierarchy + """', alignment:['fill','bottom'] },
+helpBtn: Button { text:'""" + folderSetupData.strHelp + """', alignment:['right','top'], preferredSize:[25,-1] },
+},
+hierarchy: EditText { properties:{multiline: true""" + hierarchyWantReturn + """}, alignment:['fill','fill'], preferredSize:[150,150] },
+createBtn: Button { text:'""" + folderSetupData.strCreateFolders + """', alignment:['center','bottom'] },
+}""";
+pal.margins = [10,10,10,10];
+pal.grp = pal.add(res);
+
+pal.grp.header.helpBtn.onClick = function () {alert(folderSetupData.strAbout, folderSetupData.strAboutTitle);}
+pal.grp.hierarchy.text = folderSetupData.strDefaultHierarchy;
+pal.grp.createBtn.onClick = folderSetup_doCreateFolders;
+
+pal.layout.layout(true);
+pal.layout.resize();
+pal.onResizing = pal.onResize = function () {this.layout.resize();}
+}
+
+return pal;
+}
+
+// folderSetup_doCreateFolders()
+// Callback function for creating the actual folder structure
+function folderSetup_doCreateFolders()
+{
+var folderNames = this.parent.hierarchy.text.split("\n"); // Split the lines of edittext content into an array
+
+if (folderNames.length > 0)
+{
+app.beginUndoGroup(folderSetupData.scriptName);
+
+var matches;
+var currParent = lastFolder = app.project.rootFolder, newFolder;
+var currIndent = 0, newIndent;
+
+// Traverse the folder names
+for (var f in folderNames)
+{
+// Use a regular expression to pick off the indentation and folder name
+matches = folderNames[f].match(/^(\s*)(.*)$/);
+if ((matches != null) && ((matches.length == 3) && (matches[2] != ""))) // Skip blank lines
+{
+//$.writeln("creating folder named '"+matches[2]+"'");
+newIndent = parseInt(matches[1].length / 4);
+
+// Determine where to place the new folder
+if (newIndent > currIndent) // Nest new folder
+{
+currParent = lastFolder;
+currIndent++;
+}
+else if (newIndent < currIndent) // Create in some parent folder
+{
+// Find indent matching newIndent by traversing parent folders
+while ((currIndent > 0) && (currIndent > newIndent))
+{
+currParent = currParent.parentFolder;
+currIndent--;
+}
+}
+// else create at same level as previous folder (sibling)
+
+// Create the new folder in the current parent
+lastFolder = newFolder = app.project.items.addFolder(matches[2]);
+newFolder.parentFolder = currParent;
+}
+}
+
+app.endUndoGroup();
+}
+}
+
+// main:
+//
+
+if (parseFloat(app.version) < 9)
+{
+alert(folderSetupData.strErrMinAE90, folderSetupData.scriptName);
+return;
+}
+else
+{
+var fsPal = folderSetup_buildUI(thisObj);
+if (fsPal != null)
+{
+// Use the last defined folder hierarchy (saved in the After Effects preferences file), if it exists
+if (app.settings.haveSetting("Adobe", "folderSetup_hierarchy"))
+{
+fsPal.grp.hierarchy.text = app.settings.getSetting("Adobe", "folderSetup_hierarchy").toString();
+}
+
+// Save current folder hierarchy upon closing the palette
+fsPal.onClose = function()
+{
+app.settings.saveSetting("Adobe", "folderSetup_hierarchy", fsPal.grp.hierarchy.text);
+}
+
+if (fsPal instanceof Window)
+{
+fsPal.center();
+fsPal.show();
+}
+else
+fsPal.layout.layout(true);
+}
+}
+}
+
+FolderSetup(this);
+}
+
+
+
+//   END - Creaza foldere extra
+
+
+
+ // START Project Management
+
+
+// This script will organize your files in project panel, You can move all the specific files to their particular folders respectively, 
+{
+	function myScript(thisObj){
+		function myScript_buildUI(thisObj){
+			var myPanel = (thisObj instanceof Panel) ? thisObj : new Window("palette", "Project Management", undefined, {resizeable:true});
+            var myButton = myPanel.add("button",[10,10,100,30], "Folder Structure");
+            var importFile = myPanel.add("button",[10,10,100,30], "Import File");
+            var movecomps = myPanel.add("button",[10,10,100,30], "Move Comps");
+            var movepng = myPanel.add("button",[10,10,100,30], "Move Images");
+            var moveplates = myPanel.add("button",[10,10,100,30], "Move Videos");
+            var movesound = myPanel.add("button",[10,10,100,30], "Move Audio");
+            var moveAi = myPanel.add("button",[10,10,100,30], "Move Vector files");
+            var movepsd = myPanel.add("button",[10,10,100,30], "Move PSD files");
+            var deletefolders = myPanel.add("button",[10,10,125,30], "Delete Empty Folders");
+            
+
+		    myButton.helpTip = "Create the right Directories";
+			myButton.onClick = function() {
+                var compFolder = false;
+  for (var i = 1; i <= app.project.numItems; i++){
+    if ((app.project.item(i) instanceof FolderItem) && (app.project.item(i).name == "00. Comps")){
+      var myFolder = app.project.item(i);
+      compFolder = true;
+      break;
+      }
+  }
+if(!compFolder){
+    var myFolder = app.project.items.addFolder("00. Comps");
+    }
+
+
+// Second Folder
+{
+var aiFolder = false;
+  for (var i = 1; i <= app.project.numItems; i++){
+    if ((app.project.item(i) instanceof FolderItem) && (app.project.item(i).name == "04. ai")){
+      var myaiFolder = app.project.item(i);
+      aiFolder = true;
+      break;
+      }
+  }
+if(!aiFolder){
+    var myaiFolder = app.project.items.addFolder("04. ai");
+    }}
+
+// Third Folder
+{
+var pngFolder = false;
+  for (var i = 1; i <= app.project.numItems; i++){
+    if ((app.project.item(i) instanceof FolderItem) && (app.project.item(i).name == "03. Photo")){
+      var mypngFolder = app.project.item(i);
+      pngFolder = true;
+      break;
+      }
+  }
+if(!pngFolder){
+    var mypngFolder = app.project.items.addFolder("03. Photo");
+    }
+}
+
+
+// Fourth Folder
+{
+var platesFolder = false;
+  for (var i = 1; i <= app.project.numItems; i++){
+    if ((app.project.item(i) instanceof FolderItem) && (app.project.item(i).name == "02. Video")){
+      var myplatesFolder = app.project.item(i);
+      platesFolder = true;
+      break;
+      }
+  }
+if(!platesFolder){
+    var myplatesFolder = app.project.items.addFolder("02. Video");
+    }
+}
+
+// Fifth Folder
+{
+  var soundFolder = false;
+    for (var i = 1; i <= app.project.numItems; i++){
+      if ((app.project.item(i) instanceof FolderItem) && (app.project.item(i).name == "01. Audio")){
+        var mysoundFolder = app.project.item(i);
+        soundFolder = true;
+        break;
+        }
+    }
+  if(!soundFolder){
+      var mysoundFolder = app.project.items.addFolder("01. Audio");
+      }
+  }
+			
+ // Sixth Folder
+ 
+{
+var psdFolder = false;
+  for (var i = 1; i <= app.project.numItems; i++){
+    if ((app.project.item(i) instanceof FolderItem) && (app.project.item(i).name == "05. psd")){
+      var mypsdFolder = app.project.item(i);
+      psdFolder = true;
+      break;
+      }
+  }
+if(!psdFolder){
+    var mypsdFolder = app.project.items.addFolder("05. psd");
+    }
+}            
+
+
+}
+			
+        
+        importFile.helpTip = "Import Files in After Effects";
+        importFile.onClick = ImportFile ;
+ 
+function ImportFile () {
+ 
+        app.beginUndoGroup("Import File");
+ 
+        var targetFile = File.openDialog("Import File");
+       
+        if (targetFile) {
+                  var importOptions = new ImportOptions (targetFile);                                                                
+                  app.project.importFile (importOptions);                
+                }
+        app.endUndoGroup();
+    }
+		
+movecomps.helpTip = "Move all the compositions to comp folder";			
+movecomps.onClick = function(){
+var compFolder = null;
+  for (var i = 1; i <= app.project.numItems; i++){
+    if ((app.project.item(i) instanceof FolderItem) && (app.project.item(i).name == "00. Comps")){
+      compFolder = app.project.item(i);
+      break;
+    }
+  }
+
+  if (compFolder == null) return;
+  var comps = [];
+for(var i = 1; i <= app.project.numItems; i++){
+    if(app.project.item(i) instanceof CompItem)
+    comps.push(app.project.item(i));
+  }
+  for (var i = 0; i < comps.length; i++)
+        comps[i].parentFolder = compFolder;
+  
+  }
+
+// Move AI/Eps Code
+
+moveAi.helpTip = "Move all the Illustrator files to ai folder";
+moveAi.onClick = function (){
+var aiFolder = null;
+  for (var i = 1; i <= app.project.numItems; i++){
+    if ((app.project.item(i) instanceof FolderItem) && (app.project.item(i).name == "04. ai")){
+        
+      aiFolder = app.project.item(i);
+      break;
+    }
+  }
+
+  if (aiFolder == null) return;
+  var ai = [];
+for(var i = 1; i <= app.project.numItems; i++){
+    var splitName = app.project.item(i).name.split(".");
+    if((app.project.item(i) instanceof FootageItem) && (splitName[splitName.length-1].toLowerCase() == "ai") || (splitName[splitName.length-1].toLowerCase() == "eps"))
+    ai.push(app.project.item(i));
+  }
+  for (var i = 0; i < ai.length; i++)
+        ai[i].parentFolder = aiFolder;
+  
+  }
+
+// End Code
+
+// Move Png Code
+
+movepng.helpTip = "Move all the Png files to png folder";
+movepng.onClick = function (){
+var pngFolder = null;
+  for (var i = 1; i <= app.project.numItems; i++){
+    if ((app.project.item(i) instanceof FolderItem) && (app.project.item(i).name == "03. Photo")){
+        
+      pngFolder = app.project.item(i);
+      break;
+    }
+  }
+
+  if (pngFolder == null) return;
+  var pngs = [];
+for(var i = 1; i <= app.project.numItems; i++){
+    var splitName = app.project.item(i).name.split(".");
+    if((app.project.item(i) instanceof FootageItem) && (splitName[splitName.length-1].toLowerCase() == "png") || (splitName[splitName.length-1].toLowerCase() == "jpg") || (splitName[splitName.length-1].toLowerCase() == "exr"))
+    pngs.push(app.project.item(i));
+  }
+  for (var i = 0; i < pngs.length; i++)
+        pngs[i].parentFolder = pngFolder;
+  
+  }
+
+// End Code
+
+// Move Sound
+
+movesound.helpTip = "Move all the Sound files to sound folder";
+movesound.onClick = function (){
+var soundFolder = null;
+  for (var i = 1; i <= app.project.numItems; i++){
+    if ((app.project.item(i) instanceof FolderItem) && (app.project.item(i).name == "01. Audio")){
+        
+      soundFolder = app.project.item(i);
+      break;
+    }
+  }
+
+  if (soundFolder == null) return;
+  var sound = [];
+for(var i = 1; i <= app.project.numItems; i++){
+    var splitName = app.project.item(i).name.split(".");
+    if((app.project.item(i) instanceof FootageItem) && (splitName[splitName.length-1].toLowerCase() == "wav") || (splitName[splitName.length-1].toLowerCase() == "aif") || (splitName[splitName.length-1].toLowerCase() == "mp3"))
+    sound.push(app.project.item(i));
+  }
+  for (var i = 0; i < sound.length; i++)
+        sound[i].parentFolder = soundFolder;
+  
+  }
+
+// End Code
+
+// Move Plates Code
+
+moveplates.helpTip = "Move all the Footages to plates folder";
+moveplates.onClick = function (){
+var platesFolder = null;
+  for (var i = 1; i <= app.project.numItems; i++){
+    if ((app.project.item(i) instanceof FolderItem) && (app.project.item(i).name == "02. Video")){
+        
+      platesFolder = app.project.item(i);
+      break;
+    }
+  }
+
+  if (platesFolder == null) return;
+  var plates = [];
+for(var i = 1; i <= app.project.numItems; i++){
+    var splitName = app.project.item(i).name.split(".");
+    if((app.project.item(i) instanceof FootageItem) && (splitName[splitName.length-1].toLowerCase() == "mov") || (splitName[splitName.length-1].toLowerCase() == "mp4") || (splitName[splitName.length-1].toLowerCase() == "avi"))
+    plates.push(app.project.item(i));
+}
+for (var i = 0; i < plates.length; i++)
+      plates[i].parentFolder = platesFolder;
+
+}
+
+// End Code
+
+// Move PSD Code
+
+movepsd.helpTip = "Move all the PSD files to psd folder";
+movepsd.onClick = function (){
+  var psdFolder = null;
+    for (var i = 1; i <= app.project.numItems; i++){
+      if ((app.project.item(i) instanceof FolderItem) && (app.project.item(i).name == "05. psd")){
+        psdFolder = app.project.item(i);
+        break;
+      }
+    }
+    if (psdFolder == null) return;
+      var psds = [];
+      for(var i = 1; i <= app.project.numItems; i++){
+        var splitName = app.project.item(i).name.split(".");
+        if((app.project.item(i) instanceof FootageItem) && (splitName[splitName.length-1].toLowerCase() == "psd"))
+          psds.push(app.project.item(i));
+      }
+      for (var i = 0; i < psds.length; i++)
+        psds[i].parentFolder = psdFolder;
+  }
+
+// End Code
+
+
+
+// Delete Empty Folders Code
+
+deletefolders.helpTip = "Delete all empty folders";
+deletefolders.onClick = function removeFolders(theFolder) {
+  var del = [];
+    for (var i = 1; i<=app.project.numItems; i++) {
+    if(app.project.item(i) instanceof FolderItem& app.project.item(i).numItems==0)
+    del.push(app.project.item(i));
+  }
+  for (var i = 0; i < del.length; i++)
+    del[i].remove();
+
+  
+
+  // loop from last to first item so removing a folder won't affect the index
+ // for (var i = theFolder.numItems; i > 0; i--) {
+ 
+  //if (theFolder.item(i) instanceof FolderItem) {
+  // if subfolder contains items, enter recursive function again using the subfolder
+  //if (theFolder.item(i).numItems > 0) removeFolders(theFolder.item(i));
+ 
+  // if either it never contained any items, or the contents has now been removed after leaving the later recursions, delete the folder
+  //if (theFolder.item(i).numItems == 0) theFolder.item(i).remove();
+  //}
+  //}
+}
+ 
+// enter function for the first time using the root folder
+//removeFolders(app.project);
+
+
+// End Code
+
+myPanel.layout.layout(true);			
+            return myPanel;
+		}
+	
+		
+		var myScriptPal = myScript_buildUI(thisObj);
+
+		if (myScriptPal != null && myScriptPal instanceof Window){
+			myScriptPal.center();
+			myScriptPal.show();
+		}
+
+	}
+	myScript(this);
+}
+
+
+
+
+
+
+ // END Project Management
+
+
+
+ // Alert
+
+alert("Compozitia a fost creata cu succes. Au fost importate cu succes toate fisierele si a fost creata structura de foldere standard. Adauga fisierele importate in foldere. Creeaza-ti foldere noi.")
+
+
+</code></pre>
+	
+	<p><bt>TAGS: <a href="#">Adobe ExtendScript Toolkit</a></bt> - <bt><a href="#">JavaScript</a></bt> - <bt><a href="#">ActionScript</a></bt></p>
+
+
+
+
+
 
 
 
