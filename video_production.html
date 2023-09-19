@@ -21,7 +21,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
 
-    <title>[PROJECT-NAME] | Peter Jonathan </title>
+    <title>Work | Peter Jonathan</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -29,13 +29,7 @@
 
     <!-- Custom styles for this template -->
     <link href="assets/css/main.css" rel="stylesheet">
-	
-	<!-- AUDIO PLAYER -->
-  <link rel='stylesheet' href='https://cdn.plyr.io/3.4.6/plyr.css'><link rel="stylesheet" href="vplyr/style.css">
-  
-  <!-- ------------------ -->
-  
-  
+
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="assets/js/hover.zoom.js"></script>
     <script src="assets/js/hover.zoom.conf.js"></script>
@@ -45,6 +39,215 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+	  
+	
+	  <style>
+.responsive {
+  width: 100%;
+  height: auto;
+}
+</style>
+
+
+
+<style>
+h2{
+  text-align:center;
+  padding: 20px;
+}
+/* Slider */
+
+.slick-slide {
+    margin: 0px 20px;
+}
+
+.slick-slide img {
+    width: 100%;
+}
+
+.slick-slider
+{
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+            user-select: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -ms-touch-action: pan-y;
+        touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list
+{
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+.slick-list:focus
+{
+    outline: none;
+}
+.slick-list.dragging
+{
+    cursor: pointer;
+    cursor: hand;
+}
+
+.slick-slider .slick-track,
+.slick-slider .slick-list
+{
+    -webkit-transform: translate3d(0, 0, 0);
+       -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+         -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+}
+
+.slick-track
+{
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+}
+.slick-track:before,
+.slick-track:after
+{
+    display: table;
+    content: '';
+}
+.slick-track:after
+{
+    clear: both;
+}
+.slick-loading .slick-track
+{
+    visibility: hidden;
+}
+
+.slick-slide
+{
+    display: none;
+    float: left;
+    height: 100%;
+    min-height: 1px;
+}
+[dir='rtl'] .slick-slide
+{
+    float: right;
+}
+.slick-slide img
+{
+    display: block;
+}
+.slick-slide.slick-loading img
+{
+    display: none;
+}
+.slick-slide.dragging img
+{
+    pointer-events: none;
+}
+.slick-initialized .slick-slide
+{
+    display: block;
+}
+.slick-loading .slick-slide
+{
+    visibility: hidden;
+}
+.slick-vertical .slick-slide
+{
+    display: block;
+    height: auto;
+    border: 1px solid transparent;
+}
+.slick-arrow.slick-hidden {
+    display: none;
+}
+</style>
+
+		   <!-- START SUBMENU -->   
+	   <style>
+.dropbtn {
+  background-color: grey;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
+		   <!-- END SUBMENU --> 
+		   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	   <!-- ALERT -->
+	  <style>
+.alert {
+  padding: 20px;
+  background-color: #1BBC9B;
+  color: white;
+  opacity: 1;
+  transition: opacity 0.6s;
+  margin-bottom: 15px;
+}
+
+.alert.success {background-color: #4CAF50;}
+.alert.info {background-color: #059eeb;}
+.alert.warning {background-color: #ff9800;}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+</style>
+	
+	<!-- end ALERT -->
+
+	  
+	  
   </head>
 
   <body>
@@ -58,82 +261,195 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">PETER JONATHAN</a>
+          <a class="navbar-brand" href="index.html">Peter Jonathan</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="index.html">Home</a></li>
             <li><a href="work.html">Work</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="blog.html">Blog</a></li>
+            <li><a href="under_construction.html">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
-			<li><a href="#" target="_blank">Resume</a></li>
+			<div class="dropdown">
+  <button class="dropbtn"><i class="fa fa-download" aria-hidden="true"></i> RESUME</button>
+  <div class="dropdown-content">
+    <a href="cv/CV_Peter_Macris.pdf" target="_blank">ENGLISH</a>
+    <a href="https://peterportfoliomac.github.io/ro" target="_blank">ROMANIAN</a>
+    
+  </div>
+</div>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
 	
 	
+	<div class="alert info">
+  <span class="closebtn">&times;</span>  
+  <strong>Info!</strong> This portfolio is currently under construction. Sorry for any inconvenience.
+</div>
+	
 	<!-- +++++ Projects Section +++++ -->
 	
-	
+	<div class="container pt">
 		<div class="row mt">
+			<div class="col-lg-6 col-lg-offset-3 centered">
+				<h3>MY WORK</h3>
+				<hr>
+				<p>Examples of my work,  it’s all here. Pick a category. Buy images or video footages from shutterstock.com</p>
+						
+
+
+
+
+<p style="text-align:center"><img alt="" height="72" src="Shutterstock_logo.png" width="495" class="responsive" />
+</p>
+<p style="text-align: center;"><strong><a href="https://www.shutterstock.com/g/MacrisPeter?rid=198573500" target="_blank"><span style="color:#696969">Image gallery</span></a><span style="color:#696969">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><a href="https://www.shutterstock.com/g/MacrisPeter/video?rid=198573500" target="_blank"><span style="color:#696969"> Video gallery</span></a></strong>
+</p>
+
+
+
+
+
+
+
+						
+			</div>
 			
 		</div>
 		<div class="row mt centered">	
-			<div class="col-lg-8 col-lg-offset-2">
-			
-			<h3>VIDEO PROJECT NAME</h3>
-			<hr>
-			<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+	
+			<div class="col-lg-4">
+				<a class="zoom green" href="voice_over.html"><img class="img-responsive" src="assets/img/portfolio/port01.jpg" alt="" /></a>
+				<p>Voice Over</p>
 			</div>
-				<!-- partial:index.partial.html -->
-<div class="container">
-<video controls crossorigin playsinline poster="https://peterportfoliomac.github.io/en/video/refurbished.ro.jpg" id="player">
-                <!-- Video files -->
-                <source src="https://peterportfoliomac.github.io/en/video/refurbished.ro.mp4" type="video/mp4" size="576">
-                <source src="https://peterportfoliomac.github.io/en/video/refurbished.ro.mp4" type="video/mp4" size="720">
-                <source src="https://peterportfoliomac.github.io/en/video/refurbished.ro.mp4" type="video/mp4" size="1080">
-                <source src="https://peterportfoliomac.github.io/en/video/refurbished.ro.mp4" type="video/mp4" size="1440">
-
-                <!-- Caption files -->
-                <track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
-                    default>
-                <track kind="captions" label="Français" srclang="fr" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt">
-
-                <!-- Fallback for browsers that don't support the <video> element -->
-                <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
-            </video>
-  
-  
-</div>
-<!-- partial -->
-  <script src='https://cdn.plyr.io/3.4.6/plyr.js'></script><script  src="vplyr/script.js"></script>
-  
-  
-  
-				<p><bt>Client: <a href="https://www.refurbished.ro/">refurbished.ro</a></bt> - <bt>Type: <a href="#">Video Production</a></bt> - <bt>Date: <a href="#">-</a></bt></p>
+			<div class="col-lg-4">
+				<a class="zoom green" href="music_production.html"><img class="img-responsive" src="assets/img/portfolio/port02.jpg" alt="" /></a>
+				<p>Music Production</p>
+			</div>
+			<div class="col-lg-4">
+				<a class="zoom green" href="video_production.html"><img class="img-responsive" src="assets/img/portfolio/port03.jpg" alt="" /></a>
+				<p>Video Production</p>
 			</div>
 		</div><!-- /row -->
+		<div class="row mt centered">	
+			<div class="col-lg-4">
+				<a class="zoom green" href="screenplays.html"><img class="img-responsive" src="assets/img/portfolio/port04.jpg" alt="" /></a>
+				<p>Commercial/AD Screenplays</p>
+			</div>
+			<div class="col-lg-4">
+				<a class="zoom green" href="Aerial_Videography.html"><img class="img-responsive" src="assets/img/portfolio/port05.jpg" alt="" /></a>
+				<p>Aerial Videography</p>
+			</div>
+			<div class="col-lg-4">
+				<a class="zoom green" href="3d_modeling.html"><img class="img-responsive" src="assets/img/portfolio/port06.jpg" alt="" /></a>
+				<p>3D Modeling</p>
+			</div>
+		
+			</div><!-- /row -->
+		
+		
+		
+			<div class="container" >
+		<h2 style="text-align: center;"><a href="codes.html">For Programmers - Click Here</a></h2>
+		
+		</div>
+		
+		
+		
+		
+		
+		<script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+<div class="container" >
+  <h2>Partners / Clients and more</h2>
+   <section class="customer-logos slider">
+      <div class="slide"><a href="https://www.shutterstock.com/g/MacrisPeter?rid=198573500" target="_blank"><img src="Shutterstock_logo1.jpg"></a></div>
+      <div class="slide"><a href='https://www.pond5.com/artist/petermacris#1/2176' target="_blank"><img src="pond5-logo_gr1.jpg"></a></div>
+      <div class="slide"><a href='https://www.dreamstime.com/Macrispeter_portfolio_pg1#res24294300' target="_blank"><img src="Dreamstime_Logo1.jpg"></a></div>
+	  
+	  <div class="slide"><img src="esolar.ro-logo1.jpg"></div>
+	  <div class="slide"><img src="ram-logo.jpg"></div>
+	  <div class="slide"><img src="COMMODOREHOMES.COM.AU-logo.jpg"></div>
+      
+   </section>
+</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<script>
+		
+		$(document).ready(function(){
+    $('.customer-logos').slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 1500,
+        arrows: false,
+        dots: false,
+        pauseOnHover: false,
+        responsive: [{
+            breakpoint: 768,
+            settings: {
+                slidesToShow: 4
+            }
+        }, {
+            breakpoint: 520,
+            settings: {
+                slidesToShow: 3
+            }
+        }]
+    });
+});
+		
+		
+	</script>	
+	
+	 <script>
+var close = document.getElementsByClassName("closebtn");
+var i;
+
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function(){
+    var div = this.parentElement;
+    div.style.opacity = "0";
+    setTimeout(function(){ div.style.display = "none"; }, 600);
+  }
+}
+</script>
+		
+		
+	
+		
 	</div><!-- /container -->
 	
 	
+		
 	<!-- +++++ Footer Section +++++ -->
 	
 	<div id="footer">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-4">
-					<h4>My Bunker</h4>
+					<h4>Contact</h4>
 					<p>
-						Some Address 987,<br/>
-						+34 9054 5455, <br/>
-						Madrid, Spain.
+						macris.peter@gmail.com,<br/>
+						+40.769.442.309, <br/>
+						Bucharest, Romania.
 					</p>
 				</div><!-- /col-lg-4 -->
 				
 				<div class="col-lg-4">
-					<h4>My Links</h4>
+					<h4>Social / Profile</h4>
 					<p>
 						<a href="https://twitter.com/petermac047">Twitter</a><br/>
 						<a href="#">Freelancer</a><br/>
